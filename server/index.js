@@ -25,9 +25,10 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Forgetic Dashboard running at http://localhost:${PORT}`);
-  console.log(`   Environment: ${process.env.EBAY_ENVIRONMENT || 'Production'}`);
-  console.log(`   eBay Client ID: ${process.env.EBAY_CLIENT_ID ? '✓ Set' : '✗ Missing'}`);
-  console.log(`   DeepSeek API: ${process.env.DEEPSEEK_API_KEY ? '✓ Set' : '✗ Missing'}\n`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`\n🚀 Forgetic Dashboard running locally at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
